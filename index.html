@@ -1,0 +1,114 @@
+#!ipxe
+####       boot.pdns.win initial loader        ####
+set conn_type http
+chain --autofree http://boot.pdns.win/menu.ipxe || echo HTTP failed... attempting HTTPS...
+set conn_type https
+chain --autofree https://boot.pdns.win/menu.ipxe || echo HTTPS failed, localbooting...
+exit
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>pdns.win BootLoaders</title>
+  </head>
+  <style>
+    table, th, td {
+    padding: 5px;
+    border: 1px solid black; 
+    }
+  </style>
+  <body>
+  <div style="font-family: monospace, fixed; font-weight: bold;">
+    <span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;_&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;_&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><br />
+<span style="">&#160;_&#160;__&#160;&#160;&#160;__|&#160;|_&#160;__&#160;&#160;_____&#160;&#160;&#160;&#160;&#160;&#160;_(_)_&#160;__&#160;&#160;</span><br />
+<span style="">|&#160;&#39;_&#160;\&#160;/&#160;_`&#160;|&#160;&#39;_&#160;\/&#160;__\&#160;\&#160;/\&#160;/&#160;/&#160;|&#160;&#39;_&#160;\&#160;</span><br />
+<span style="">|&#160;|_)&#160;|&#160;(_|&#160;|&#160;|&#160;|&#160;\__&#160;\\&#160;V&#160;&#160;V&#160;/|&#160;|&#160;|&#160;|&#160;|</span><br />
+<span style="">|&#160;.__/&#160;\__,_|_|&#160;|_|___(_)_/\_/&#160;|_|_|&#160;|_|</span><br />
+<span style="">|_|&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><br />
+    <p>
+  Version: 10.x<br>
+  </p>
+  <p>Legacy (PCBIOS) iPXE Bootloaders</p>
+  <table style="width:100%">
+    <!-- table header -->
+    <tr>
+       <th> Type </th>
+       <th> Bootloader </th>
+       <th> Description </th>
+    </tr>
+    <!-- table rows -->
+        <tr>
+       <td> ISO </td>
+       <td> <a href="ipxe/pdns.win.iso">pdns.win.iso</a> </td>
+       <td> Used for CD/DVD, Virtual CDs, DRAC/iLO, VMware, Virtual Box </td>
+    </tr>
+        <tr>
+       <td> USB </td>
+       <td> <a href="ipxe/pdns.win.usb">pdns.win.usb</a> </td>
+       <td> Used for creation of USB Keys </td>
+    </tr>
+        <tr>
+       <td> Kernel </td>
+       <td> <a href="ipxe/pdns.win.lkrn">pdns.win.lkrn</a> </td>
+       <td> Used for booting from GRUB/EXTLINUX </td>
+    </tr>
+        <tr>
+       <td> Floppy </td>
+       <td> <a href="ipxe/pdns.win.dsk">pdns.win.dsk</a> </td>
+       <td> Virtual floppy disk for DRAC/iLO, VMware, Virtual Box, etc </td>
+    </tr>
+        <tr>
+       <td> DHCP </td>
+       <td> <a href="ipxe/pdns.win.kpxe">pdns.win.kpxe</a> </td>
+       <td> DHCP boot image file, uses built-in iPXE NIC drivers </td>
+    </tr>
+        <tr>
+       <td> DHCP-undionly </td>
+       <td> <a href="ipxe/pdns.win-undionly.kpxe">pdns.win-undionly.kpxe</a> </td>
+       <td> DHCP boot image file, use if you have NIC issues </td>
+    </tr>
+      </table>
+
+  <p>UEFI iPXE Bootloaders</p>
+
+  <table style="width:100%">
+    <!-- table header -->
+    <tr>
+       <th> Type </th>
+       <th> Bootloader </th>
+       <th> Description </th>
+    </tr>
+    <!-- table rows -->
+        <tr>
+       <td> ISO </td>
+       <td> <a href="ipxe/pdns.win-efi.iso">pdns.win-efi.iso</a> </td>
+       <td> EFI BIOS, works in Virtual Box EFI mode </td>
+    </tr>
+        <tr>
+       <td> USB </td>
+       <td> <a href="ipxe/pdns.win-efi.usb">pdns.win-efi.usb</a> </td>
+       <td> Used for creation of USB Keys </td>
+    </tr>
+        <tr>
+       <td> DHCP </td>
+       <td> <a href="ipxe/pdns.win.efi">pdns.win.efi</a> </td>
+       <td> DHCP EFI boot image file, uses built-in iPXE NIC drivers </td>
+    </tr>
+        <tr>
+       <td> DHCP-snp </td>
+       <td> <a href="ipxe/pdns.win-snp.efi">pdns.win-snp.efi</a> </td>
+       <td> EFI w/ Simple Network Protocol, attempts to boot all net devices </td>
+    </tr>
+        <tr>
+       <td> DHCP-snponly </td>
+       <td> <a href="ipxe/pdns.win-snponly.efi">pdns.win-snponly.efi</a> </td>
+       <td> EFI w/ Simple Network Protocol, only boots from device chained from </td>
+    </tr>
+      </table>
+
+  <p>Checksums<p>
+
+  <a href="ipxe/pdns.win-sha256-checksums.txt">SHA256 checksums</a>
+  </div>
+  </body>
+</html>

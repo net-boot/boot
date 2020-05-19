@@ -1,0 +1,24 @@
+#!ipxe
+
+# k3OS
+# https://k3os.io/
+
+goto ${menu} ||
+
+:k3os
+set os k3OS
+set k3os_mirror https://github.com/rancher/k3os/releases/download/
+menu ${os} by Rancher - ${arch_a}
+item --gap k3OS Versions:
+item v0.8.0 ${space} ${os} v0.8.0
+choose version || goto k3os_exit
+
+:k3os_boot
+imgfree
+kernel ${k3os_mirror}${version}/k3os-vmlinuz-amd64 printk.devkmsg=on k3os.mode=live k3os.install.iso_url=${k3os_mirror}${version}/k3os-amd64.iso console=ttyS0 console=tty1 initrd=k3os-initrd-amd64
+initrd ${k3os_mirror}${version}/k3os-initrd-amd64
+boot
+
+:k3os_exit
+clear menu
+exit 0

@@ -1,0 +1,41 @@
+#!ipxe
+
+menu Utilities
+item --gap Utilities:
+item 4mlinux ${space} 4MLinux
+item bootrepair ${space} Boot Repair CD
+item caine ${space} CAINE
+item clonezilla ${space} Clonezilla
+item gparted ${space} GParted
+item grml ${space} Grml
+item kaspersky ${space} Kaspersky Rescue Disk
+item rescatux ${space} Rescatux
+item systemrescue ${space} System Rescue CD
+echo ${cls}
+goto ${menu} ||
+chain ${menu}.ipxe || goto utils_exit
+goto utils_exit
+
+:bootrepair
+imgfree
+kernel ${live_endpoint}/ubuntu-squash/releases/download/current-e035b00c/vmlinuz ip=dhcp boot=casper netboot=http fetch=${live_endpoint}/ubuntu-squash/releases/download/current-e035b00c/filesystem.squashfs initrd=initrd
+initrd ${live_endpoint}/ubuntu-squash/releases/download/current-e035b00c/initrd
+boot
+goto utils_exit
+:caine
+imgfree
+kernel ${live_endpoint}/ubuntu-squash/releases/download/11.0-0f2bac21/vmlinuz ip=dhcp boot=casper netboot=http fetch=${live_endpoint}/ubuntu-squash/releases/download/11.0-0f2bac21/filesystem.squashfs initrd=initrd
+initrd ${live_endpoint}/ubuntu-squash/releases/download/11.0-0f2bac21/initrd
+boot
+goto utils_exit
+:rescatux
+imgfree
+kernel ${live_endpoint}/debian-squash/releases/download/0.72-beta6-0775b306/vmlinuz boot=live fetch=${live_endpoint}/debian-squash/releases/download/0.72-beta6-0775b306/filesystem.squashfs selinux=1 security=selinux enforcing=0 initrd=initrd
+initrd ${live_endpoint}/debian-squash/releases/download/0.72-beta6-0775b306/initrd
+boot
+goto utils_exit
+
+
+:utils_exit
+clear menu
+exit 0

@@ -1,0 +1,47 @@
+#!ipxe
+
+goto ${menu} ||
+
+:live_menu
+set os Parrot OS
+menu ${os} - Current Arch [ ${arch} ]
+iseq ${arch} x86_64 && set arch_a amd64 || set arch_a ${arch}
+item --gap ${os} Versions
+item current-kde ${space} ${os} current kde
+item current-xfce ${space} ${os} current xfce
+item current-kde-security ${space} ${os} current kde-security
+item current-xfce-security ${space} ${os} current xfce-security
+choose live_version || goto live_exit
+goto ${live_version}
+
+
+:current-kde
+set squash_url ${live_endpoint}/debian-squash/releases/download/4.7-680ef953/filesystem.squashfs
+set kernel_url ${live_endpoint}/debian-squash/releases/download/4.7-680ef953/
+goto boot
+
+:current-xfce
+set squash_url ${live_endpoint}/debian-squash/releases/download/4.7-68fc557d/filesystem.squashfs
+set kernel_url ${live_endpoint}/debian-squash/releases/download/4.7-68fc557d/
+goto boot
+
+:current-kde-security
+set squash_url ${live_endpoint}/debian-squash/releases/download/4.7-bd06009c/filesystem.squashfs
+set kernel_url ${live_endpoint}/debian-squash/releases/download/4.7-bd06009c/
+goto boot
+
+:current-xfce-security
+set squash_url ${live_endpoint}/debian-squash/releases/download/4.7-8ffa950d/filesystem.squashfs
+set kernel_url ${live_endpoint}/debian-squash/releases/download/4.7-8ffa950d/
+goto boot
+
+
+:boot
+imgfree
+kernel ${kernel_url}vmlinuz boot=live fetch=${squash_url} initrd=initrd
+initrd ${kernel_url}initrd
+boot
+
+:live_exit
+clear menu
+exit 0

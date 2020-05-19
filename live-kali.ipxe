@@ -1,0 +1,71 @@
+#!ipxe
+
+goto ${menu} ||
+
+:live_menu
+set os Kali Linux
+menu ${os} - Current Arch [ ${arch} ]
+iseq ${arch} x86_64 && set arch_a amd64 || set arch_a ${arch}
+item --gap ${os} Versions
+item rolling ${space} ${os} Rolling
+choose live_version || goto live_exit
+menu ${os} ${live_version}
+item --gap ${os} Flavors
+goto ${live_version}
+
+:rolling
+item kali-xfce-squash ${space} Kali Rolling XFCE
+item kali-gnome-squash ${space} Kali 2019.4 GNOME
+item kali-kde-squash ${space} Kali 2019.4 KDE
+item kali-light-squash ${space} Kali 2019.4 LIGHT
+item kali-lxde-squash ${space} Kali 2019.4 LXDE
+item kali-mate-squash ${space} Kali 2019.4 MATE
+goto flavor_select
+
+:flavor_select
+choose flavor || goto live_menu
+echo ${cls}
+goto ${flavor} ||
+
+:kali-gnome-squash
+set squash_url ${live_endpoint}/debian-squash/releases/download/2019.4-734e93c5/filesystem.squashfs
+set params components username=root hostname=kali
+set kernel_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/
+goto boot
+:kali-kde-squash
+set squash_url ${live_endpoint}/debian-squash/releases/download/2019.4-d761db15/filesystem.squashfs
+set params components username=root hostname=kali
+set kernel_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/
+goto boot
+:kali-light-squash
+set squash_url ${live_endpoint}/debian-squash/releases/download/2019.4-544b485d/filesystem.squashfs
+set params components username=root hostname=kali
+set kernel_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/
+goto boot
+:kali-lxde-squash
+set squash_url ${live_endpoint}/debian-squash/releases/download/2019.4-78e57944/filesystem.squashfs
+set params components username=root hostname=kali
+set kernel_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/
+goto boot
+:kali-mate-squash
+set squash_url ${live_endpoint}/debian-squash/releases/download/2019.4-0e4d0210/filesystem.squashfs
+set params components username=root hostname=kali
+set kernel_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/
+goto boot
+set squash_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/filesystem.squashfs
+set kernel_url ${live_endpoint}/debian-core-10/releases/download/2019.4-e865a2ba/
+set params components
+set squash_url ${live_endpoint}/debian-squash/releases/download/2020.1-63491ab9/filesystem.squashfs
+set kernel_url ${live_endpoint}/debian-squash/releases/download/2020.1-63491ab9/
+set params components
+
+:boot
+imgfree
+kernel ${kernel_url}vmlinuz boot=live ${params} fetch=${squash_url} initrd=initrd
+initrd ${kernel_url}initrd
+boot
+
+:live_exit
+clear menu
+exit 0
+
