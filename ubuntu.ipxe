@@ -14,6 +14,7 @@ item focal ${space} ${os} 20.04 LTS Focal Fossa
 item eoan ${space} ${os} 19.10 Eoan Ermine
 item bionic ${space} ${os} 18.04 LTS Bionic Beaver
 item xenial ${space} ${os} 16.04 LTS Xenial Xerus
+item trusty ${space} ${os} 14.04 LTS Trusty
 item --gap Older Releases
 item older_release ${space} Set release codename...
 choose ubuntu_version || goto ubuntu_exit
@@ -31,8 +32,8 @@ goto deb_boot_type
 
 :mirrorcfg
 set mirrorcfg mirror/suite=${ubuntu_version}
-set dir ${ubuntu_base_dir}/dists/${ubuntu_version}/main/installer-${arch_a}/current/legacy-images/netboot/
-iseq ${ubuntu_version} eoan && set dir ${ubuntu_base_dir}/dists/${ubuntu_version}/main/installer-${arch_a}/current/legacy-images/netboot/ ||
+set dir ${ubuntu_base_dir}/dists/${ubuntu_version}-updates/main/installer-${arch_a}/current/images/netboot/
+iseq ${ubuntu_version} eoan && set dir ${ubuntu_base_dir}/dists/${ubuntu_version}/main/installer-${arch_a}/current/images/netboot/ ||
 
 :deb_boot_type
 menu ${os} [${ubuntu_version}] Installer
